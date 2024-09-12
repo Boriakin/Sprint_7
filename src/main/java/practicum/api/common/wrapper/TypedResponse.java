@@ -6,7 +6,7 @@ import practicum.api.common.BadResponse;
 public class TypedResponse<T> {
 
     private final Response response;
-    private Class<T> cls;
+    private final Class<T> cls;
 
     public TypedResponse(final Response response, final Class<T> cls) {
         this.response = response;

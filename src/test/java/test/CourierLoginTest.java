@@ -17,8 +17,7 @@ import static test.base.ValidData.VALID_PASSWORD;
 public class CourierLoginTest {
 
     private final String login = getRandomLogin();
-    private final String password = getRandomPassword();
-    private final String firstName = getRandomFirstName();
+    private final String password = getRandomPassword();;
     CourierApi api = new CourierApi();
 
     @Test
