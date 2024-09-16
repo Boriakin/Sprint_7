@@ -12,8 +12,8 @@ import practicum.api.pojo.courier.request.CourierLoginRequest;
 import practicum.api.pojo.courier.response.CourierLoginResponse;
 
 import static test.base.ConstantsResponceMessage.EMPTY_FIELDS_WHEN_LOGIN;
-import static test.base.RandomData.getRandomLogin;
-import static test.base.RandomData.getRandomPassword;
+import static test.base.FakeData.getFakeLogin;
+import static test.base.FakeData.getFakePassword;
 
 @RunWith(Parameterized.class)
 public class CourierLoginWithEmptyFieldsParamTest {
@@ -31,8 +31,8 @@ public class CourierLoginWithEmptyFieldsParamTest {
     @Parameterized.Parameters
     public static Object[][] data() {
         return new Object[][]{
-                {"", getRandomPassword()},
-                {getRandomLogin(), ""}
+                {"", getFakePassword()},
+                {getFakeLogin(), ""}
         };
     }
 
@@ -42,7 +42,9 @@ public class CourierLoginWithEmptyFieldsParamTest {
     public void createCourierWithEmptyFieldsTest() {
         TypedResponse<CourierLoginResponse> response =
                 api.loginCourier(new CourierLoginRequest(login, password));
-        Assert.assertEquals(response.statusCode(), 400, "Статус-код");
-        Assert.assertEquals(response.error().getMessage(), EMPTY_FIELDS_WHEN_LOGIN, "Ошибка при логине курьера.");
+        Assert.assertEquals("Статус-код", 400,response.statusCode());
+        Assert.assertEquals("Ошибка при логине курьера.",
+                EMPTY_FIELDS_WHEN_LOGIN,
+                response.error().getMessage());
     }
 }

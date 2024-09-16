@@ -6,28 +6,30 @@ import org.junit.Test;
 import practicum.api.common.Assert;
 import practicum.api.common.apis.CourierApi;
 import practicum.api.common.wrapper.TypedResponse;
+import practicum.api.pojo.courier.request.CourierCreateRequest;
 import practicum.api.pojo.courier.request.CourierLoginRequest;
 import practicum.api.pojo.courier.response.CourierLoginResponse;
 
 import static test.base.ConstantsResponceMessage.NOT_VALID_DATA;
-import static test.base.RandomData.*;
-import static test.base.ValidData.VALID_LOGIN;
-import static test.base.ValidData.VALID_PASSWORD;
+import static test.base.FakeData.*;
 
 public class CourierLoginTest {
 
-    private final String login = getRandomLogin();
-    private final String password = getRandomPassword();;
+    private final String login = getFakeLogin();
+    private final String password = getFakePassword();
+    private final String firstName = getFakeFirstName();
     CourierApi api = new CourierApi();
+
 
     @Test
     @DisplayName("Логин курьера")
     @Description("Успешный логин курьера")
     public void loginCourierTest() {
+        api.createCourier(new CourierCreateRequest(login, password, firstName));
         TypedResponse<CourierLoginResponse> response =
-                api.loginCourier(new CourierLoginRequest(VALID_LOGIN, VALID_PASSWORD));
-        Assert.assertEquals(response.statusCode(), 200, "Статус-код");
-        Assert.assertNotNull(response.body().getId(), "Получение ID после логина.");
+                api.loginCourier(new CourierLoginRequest(login, password));
+        Assert.assertEquals("Статус-код", 200, response.statusCode());
+        Assert.assertNotNull("Получение ID после логина.", response.body().getId());
     }
 
     @Test
@@ -36,10 +38,10 @@ public class CourierLoginTest {
     public void loginNotValidDataTest() {
         TypedResponse<CourierLoginResponse> response =
                 api.loginCourier(new CourierLoginRequest(login, password));
-        Assert.assertEquals(response.statusCode(), 404, "Статус-код");
-        Assert.assertEquals(response
+        Assert.assertEquals("Статус-код", 404, response.statusCode());
+        Assert.assertEquals("Сообщение об ошибке", NOT_VALID_DATA, response
                 .error()
-                .getMessage(), NOT_VALID_DATA, "Сообщение об ошибке");
+                .getMessage());
     }
 
 }

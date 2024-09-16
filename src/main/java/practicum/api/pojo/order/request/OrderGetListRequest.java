@@ -1,50 +1,17 @@
 package practicum.api.pojo.order.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class OrderGetListRequest {
     private int courierId;
     private String nearestStation;
     private int limit;
     private int page;
-
-    public OrderGetListRequest(int courierId, String nearestStation, int limit, int page) {
-        this.courierId = courierId;
-        this.nearestStation = nearestStation;
-        this.limit = limit;
-        this.page = page;
-    }
-
-    public OrderGetListRequest() {
-    }
-
-    public int getCourierId() {
-        return courierId;
-    }
-
-    public void setCourierId(int courierId) {
-        this.courierId = courierId;
-    }
-
-    public String getNearestStation() {
-        return nearestStation;
-    }
-
-    public void setNearestStation(String nearestStation) {
-        this.nearestStation = nearestStation;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
 }

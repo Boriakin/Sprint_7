@@ -13,13 +13,12 @@ import practicum.api.pojo.courier.request.CourierDeleteRequest;
 import practicum.api.pojo.courier.request.CourierLoginRequest;
 
 import static test.base.ConstantsResponceMessage.LOGIN_IN_USE;
-import static test.base.RandomData.*;
+import static test.base.FakeData.*;
 
 public class CourierCreateTest {
-
-    private final String login = getRandomLogin();
-    private final String password = getRandomPassword();
-    private final String firstName = getRandomFirstName();
+    private final String login = getFakeLogin();
+    private final String password = getFakePassword();
+    private final String firstName = getFakeFirstName();
     CourierApi api = new CourierApi();
 
     @Test
@@ -28,8 +27,8 @@ public class CourierCreateTest {
     public void createCourierTest() {
         TypedResponse<OkResponse> response =
                 api.createCourier(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals(response.statusCode(), 201, "Статус-код");
-        Assert.assertTrue(response.body().isOk(), "Курьер создан.");
+        Assert.assertEquals("Статус-код", 201, response.statusCode());
+        Assert.assertTrue("Курьер создан.", response.body().isOk());
     }
 
     @Test
@@ -38,10 +37,10 @@ public class CourierCreateTest {
     public void createTwoCouriersTest() {
         TypedResponse<OkResponse> response =
                 api.createTwoCouriers(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals(response.statusCode(), 409, "Статус-код.");
-        Assert.assertEquals(response
+        Assert.assertEquals("Статус-код", 409, response.statusCode());
+        Assert.assertEquals("Сообщение об ошибке.", LOGIN_IN_USE, response
                 .error()
-                .getMessage(), LOGIN_IN_USE, "Сообщение об ошибке.");
+                .getMessage());
     }
 
 

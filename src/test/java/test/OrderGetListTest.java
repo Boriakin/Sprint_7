@@ -18,8 +18,8 @@ public class OrderGetListTest {
     public void getListOrderTest() {
         TypedResponse<OrdersGetListResponse> response =
                 api.getOrdersList();
-        Assert.assertEquals(response
-                .statusCode(), 200, "Статус-код.");
-        Assert.assertTrue(response.contains("orders"), "Присутствует список заказов");
+        Assert.assertEquals("Статус-код.", 200, response
+                .statusCode());
+        Assert.assertTrue("Отсутствует список заказов",response.contains("orders"));
     }
 }

@@ -12,7 +12,7 @@ import practicum.api.common.wrapper.TypedResponse;
 import practicum.api.pojo.courier.request.CourierCreateRequest;
 
 import static test.base.ConstantsResponceMessage.EMPTY_FIELDS_WHEN_CREATE;
-import static test.base.RandomData.*;
+import static test.base.FakeData.*;
 
 @RunWith(Parameterized.class)
 public class CourierCreateWithEmptyFieldsParamTest {
@@ -32,9 +32,9 @@ public class CourierCreateWithEmptyFieldsParamTest {
     @Parameterized.Parameters
     public static Object[][] data() {
         return new Object[][]{
-                {getRandomLogin(), getRandomPassword(), ""},
-                {"", getRandomPassword(), getRandomFirstName()},
-                {getRandomLogin(), "", getRandomFirstName()}
+                {getFakeLogin(), getFakePassword(), ""},
+                {"", getFakePassword(), getFakeFirstName()},
+                {getFakeLogin(), "", getFakeFirstName()}
         };
     }
 
@@ -44,7 +44,7 @@ public class CourierCreateWithEmptyFieldsParamTest {
     public void createCourierWithEmptyFieldsTest() {
         TypedResponse<OkResponse> response =
                 api.createCourier(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals(response.statusCode(), 400, "Статус-код");
-        Assert.assertEquals(response.error().getMessage(), EMPTY_FIELDS_WHEN_CREATE, "Ошибка при создании курьера.");
+        Assert.assertEquals("Статус-код", 400, response.statusCode());
+        Assert.assertEquals("Ошибка при создании курьера.", EMPTY_FIELDS_WHEN_CREATE, response.error().getMessage());
     }
 }

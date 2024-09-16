@@ -14,8 +14,8 @@ import practicum.api.pojo.order.request.OrderCancelRequest;
 import practicum.api.pojo.order.request.OrderCreateRequest;
 import practicum.api.pojo.order.response.OrderCreateResponse;
 
-import static test.base.ConstantsColor.BLACK_COLOR;
-import static test.base.ConstantsColor.GREY_COLOR;
+import static test.base.ConstantsColor.BLACK;
+import static test.base.ConstantsColor.GREY;
 
 @RunWith(Parameterized.class)
 public class OrderCreateWithParamTest {
@@ -25,6 +25,7 @@ public class OrderCreateWithParamTest {
     private final String[] color;
     int track;
     OrderApi api = new OrderApi();
+
     public OrderCreateWithParamTest(String firstName, String lastName, String address, String metroStation, String phone, int rentTime, String deliveryDate, String comment, String[] color) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,11 +42,11 @@ public class OrderCreateWithParamTest {
     public static Object[][] data() {
         return new Object[][]{
                 {"Иван", "Иванов", "ул. Иванова 11", "1", "+79876543210", 1,
-                        "01.01.2022", "Комментарий 1", new String[]{BLACK_COLOR, GREY_COLOR}},
+                        "01.01.2022", "Комментарий 1", new String[]{BLACK.name(), GREY.name()}},
                 {"Иван", "Иванов", "ул. Иванова 11", "1", "+79876543210", 1,
-                        "01.01.2022", "Комментарий 2", new String[]{BLACK_COLOR}},
+                        "01.01.2022", "Комментарий 2", new String[]{BLACK.name()}},
                 {"Иван", "Иванов", "ул. Иванова 11", "1", "+79876543210", 1,
-                        "01.01.2022", "Комментарий 1", new String[]{GREY_COLOR}},
+                        "01.01.2022", "Комментарий 1", new String[]{BLACK.name()}},
                 {"Иван", "Иванов", "ул. Иванова 11", "1", "+79876543210", 1,
                         "01.01.2022", "Комментарий 1", null}
         };
@@ -62,16 +63,23 @@ public class OrderCreateWithParamTest {
             " можно указать оба цвета," +
             " можно совсем не указывать цвет")
     public void orderCreateWithParamTest() {
-        OrderCreateRequest createRequest;
-        TypedResponse<OrderCreateResponse> response =
-                api.createOrder(new OrderCreateRequest(firstName, lastName, address, metroStation,
-                        phone, rentTime, deliveryDate, comment, color));
-        Assert.assertEquals(response
-                .statusCode(), 201, "Статус-код.");
+
+        TypedResponse<OrderCreateResponse> response = api.createOrder(new OrderCreateRequest(
+                firstName,
+                lastName,
+                address,
+                metroStation,
+                phone,
+                rentTime,
+                deliveryDate,
+                comment,
+                color));
+        Assert.assertEquals("Статус-код.", 201, response
+                .statusCode());
         track = response
                 .body()
                 .getTrack();
-        Assert.assertTrue(response.contains("track"), "Присутствует трек-номер заказа");
+        Assert.assertTrue("Присутствует трек-номер заказа", response.contains("track"));
     }
 
     @After

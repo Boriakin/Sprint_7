@@ -1,14 +1,11 @@
 package practicum.api.common;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class OkResponse {
     private boolean ok;
-
-    public boolean isOk() {
-        return ok;
-    }
-
-    public void setOk(boolean ok) {
-        this.ok = ok;
-    }
 }
 

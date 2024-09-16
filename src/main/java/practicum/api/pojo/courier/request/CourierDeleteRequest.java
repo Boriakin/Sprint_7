@@ -1,20 +1,14 @@
 package practicum.api.pojo.courier.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class CourierDeleteRequest {
     private String id;
-
-    public CourierDeleteRequest(String id) {
-        this.id = id;
-    }
-
-    public CourierDeleteRequest() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }
