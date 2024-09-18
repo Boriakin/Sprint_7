@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import practicum.api.common.Assert;
+import practicum.api.common.AssertWithStep;
 import practicum.api.common.apis.OrderApi;
 import practicum.api.common.wrapper.TypedResponse;
 import practicum.api.pojo.order.request.OrderCancelRequest;
@@ -74,12 +74,12 @@ public class OrderCreateWithParamTest {
                 deliveryDate,
                 comment,
                 color));
-        Assert.assertEquals("Статус-код.", 201, response
+        AssertWithStep.assertEquals("Статус-код.", 201, response
                 .statusCode());
         track = response
                 .body()
                 .getTrack();
-        Assert.assertTrue("Присутствует трек-номер заказа", response.contains("track"));
+        AssertWithStep.assertTrue("Присутствует трек-номер заказа", response.contains("track"));
     }
 
     @After

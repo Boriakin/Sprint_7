@@ -2,7 +2,7 @@ package practicum.api.common;
 
 import io.qameta.allure.Step;
 
-public class Assert {
+public class AssertWithStep {
 
     @Step("Проверить {description}")
     public static void assertEquals(String description, String expected, String actual) {

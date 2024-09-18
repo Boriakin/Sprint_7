@@ -2,11 +2,14 @@ package test;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import practicum.api.common.Assert;
+import practicum.api.common.AssertWithStep;
 import practicum.api.common.apis.CourierApi;
 import practicum.api.common.wrapper.TypedResponse;
 import practicum.api.pojo.courier.request.CourierCreateRequest;
+import practicum.api.pojo.courier.request.CourierDeleteRequest;
 import practicum.api.pojo.courier.request.CourierLoginRequest;
 import practicum.api.pojo.courier.response.CourierLoginResponse;
 
@@ -18,8 +21,13 @@ public class CourierLoginTest {
     private final String login = getFakeLogin();
     private final String password = getFakePassword();
     private final String firstName = getFakeFirstName();
+    String id;
     CourierApi api = new CourierApi();
 
+    @Before
+    public void setUp() {
+        id = null;
+    }
 
     @Test
     @DisplayName("Логин курьера")
@@ -28,8 +36,9 @@ public class CourierLoginTest {
         api.createCourier(new CourierCreateRequest(login, password, firstName));
         TypedResponse<CourierLoginResponse> response =
                 api.loginCourier(new CourierLoginRequest(login, password));
-        Assert.assertEquals("Статус-код", 200, response.statusCode());
-        Assert.assertNotNull("Получение ID после логина.", response.body().getId());
+        AssertWithStep.assertEquals("Статус-код", 200, response.statusCode());
+        id = response.body().getId();
+        AssertWithStep.assertNotNull("Получение ID после логина.", id);
     }
 
     @Test
@@ -38,10 +47,17 @@ public class CourierLoginTest {
     public void loginNotValidDataTest() {
         TypedResponse<CourierLoginResponse> response =
                 api.loginCourier(new CourierLoginRequest(login, password));
-        Assert.assertEquals("Статус-код", 404, response.statusCode());
-        Assert.assertEquals("Сообщение об ошибке", NOT_VALID_DATA, response
+        AssertWithStep.assertEquals("Статус-код", 404, response.statusCode());
+        id = response.body().getId();
+        AssertWithStep.assertEquals("Сообщение об ошибке", NOT_VALID_DATA, response
                 .error()
                 .getMessage());
     }
 
+    @After
+    public void cleaningData() {
+        if (id != null) {
+            api.deleteCourier(new CourierDeleteRequest(id));
+        }
+    }
 }

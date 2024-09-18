@@ -4,7 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Test;
-import practicum.api.common.Assert;
+import practicum.api.common.AssertWithStep;
 import practicum.api.common.OkResponse;
 import practicum.api.common.apis.CourierApi;
 import practicum.api.common.wrapper.TypedResponse;
@@ -27,8 +27,8 @@ public class CourierCreateTest {
     public void createCourierTest() {
         TypedResponse<OkResponse> response =
                 api.createCourier(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals("Статус-код", 201, response.statusCode());
-        Assert.assertTrue("Курьер создан.", response.body().isOk());
+        AssertWithStep.assertEquals("Статус-код", 201, response.statusCode());
+        AssertWithStep.assertTrue("Курьер создан.", response.body().isOk());
     }
 
     @Test
@@ -37,8 +37,8 @@ public class CourierCreateTest {
     public void createTwoCouriersTest() {
         TypedResponse<OkResponse> response =
                 api.createTwoCouriers(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals("Статус-код", 409, response.statusCode());
-        Assert.assertEquals("Сообщение об ошибке.", LOGIN_IN_USE, response
+        AssertWithStep.assertEquals("Статус-код", 409, response.statusCode());
+        AssertWithStep.assertEquals("Сообщение об ошибке.", LOGIN_IN_USE, response
                 .error()
                 .getMessage());
     }

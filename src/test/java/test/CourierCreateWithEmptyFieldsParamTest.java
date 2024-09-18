@@ -5,7 +5,7 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import practicum.api.common.Assert;
+import practicum.api.common.AssertWithStep;
 import practicum.api.common.OkResponse;
 import practicum.api.common.apis.CourierApi;
 import practicum.api.common.wrapper.TypedResponse;
@@ -44,7 +44,7 @@ public class CourierCreateWithEmptyFieldsParamTest {
     public void createCourierWithEmptyFieldsTest() {
         TypedResponse<OkResponse> response =
                 api.createCourier(new CourierCreateRequest(login, password, firstName));
-        Assert.assertEquals("Статус-код", 400, response.statusCode());
-        Assert.assertEquals("Ошибка при создании курьера.", EMPTY_FIELDS_WHEN_CREATE, response.error().getMessage());
+        AssertWithStep.assertEquals("Статус-код", 400, response.statusCode());
+        AssertWithStep.assertEquals("Ошибка при создании курьера.", EMPTY_FIELDS_WHEN_CREATE, response.error().getMessage());
     }
 }
